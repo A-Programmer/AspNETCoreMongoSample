@@ -11,9 +11,9 @@ builder
         builder.Configuration.GetSection("SchoolDatabaseSettings")
     );
 
-builder.Services.AddControllers();
-
 builder.AddMongoDbConnectionString();
+
+builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

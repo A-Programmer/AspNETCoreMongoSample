@@ -11,9 +11,12 @@ namespace SchoolApi.Controllers;
 public sealed class StudentsController : ControllerBase
 {
     private readonly IStudentServices _studentServices;
-    public StudentsController(IStudentServices studentServices)
+    private readonly ICourseServices _courseServices;
+    public StudentsController(IStudentServices studentServices,
+        ICourseServices courseServices)
     {
         _studentServices = studentServices;
+        _courseServices = courseServices;
     }
 
     [HttpGet]
@@ -23,9 +26,26 @@ public sealed class StudentsController : ControllerBase
     [HttpGet("{id:length(24)}")]
     public async Task<ActionResult<Student>> GetById(string id)
     {
-        Student student = await _studentServices.GetById(id);
+        var student = await _studentServices.GetById(id);
 
-        return student is null ? NotFound() : Ok(student);
+        if (student is null)
+        {
+            return NotFound();
+        }
+        if (student.Courses is null || !student.Courses.Any())
+        {
+            return Ok(student);
+        }
+
+        student.CourseList ??= new();
+        foreach (string courseId in student.Courses)
+        {
+            Course course = await _courseServices.GetById(courseId) ?? throw new Exception("Invalid Course Id");
+            
+            student.CourseList.Add(course);
+        }
+
+        return Ok(student);
     }
 
     [HttpPost]

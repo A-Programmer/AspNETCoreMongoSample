@@ -1,5 +1,6 @@
 ﻿namespace SchoolApi.Models;
 
+[BsonIgnoreExtraElements]
 public class Student 
 { 
     [BsonId] 
@@ -13,4 +14,10 @@ public class Student
     public string LastName { get; set; } = null!;
     
     public string Major { get; set; } = null!;
+    
+    [BsonRepresentation(BsonType.ObjectId)]
+    public List<string> Courses { get; set; } = null!;
+
+    [BsonIgnore]
+    public List<Course> CourseList { get; set; } = null!;
 }
