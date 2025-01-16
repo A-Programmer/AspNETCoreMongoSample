@@ -8,7 +8,6 @@ namespace SchoolApi.Services;
 public class CourseServices : ICourseServices
 {
     private readonly IMongoCollection<Course> _courseCollection;
-
     public CourseServices(IOptions<SchoolDatabaseSettings> schoolSettings,
         IMongoClient client)
     {

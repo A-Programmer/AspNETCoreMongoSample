@@ -1,6 +1,8 @@
-﻿namespace SchoolApi.Models;
+﻿using SchoolApi.Contracts;
 
-public class Course 
+namespace SchoolApi.Models;
+
+public class Course : IEntity
 { 
     [BsonId] 
     [BsonRepresentation(BsonType.ObjectId)] 
