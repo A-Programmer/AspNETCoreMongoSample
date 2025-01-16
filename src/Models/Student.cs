@@ -1,7 +1,9 @@
-﻿namespace SchoolApi.Models;
+﻿using SchoolApi.Contracts;
+
+namespace SchoolApi.Models;
 
 [BsonIgnoreExtraElements]
-public class Student 
+public class Student  : IEntity
 { 
     [BsonId] 
     [BsonRepresentation(BsonType.ObjectId)] 
